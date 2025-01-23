@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState;
+  const [password, setPassword] = useState;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5002/login", { name, password })
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
