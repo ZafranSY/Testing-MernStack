@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 const LoginPage = () => {
-  const [email, setEmail] = useState;
-  const [password, setPassword] = useState;
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5002/login", { name, password })
+      .post("http://localhost:5002/login", { email, password })
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
+
+    navigate("/home");
   };
   return (
     <div className="container mt-5">
@@ -19,7 +24,7 @@ const LoginPage = () => {
           <div className="card">
             <div className="card-body">
               <h3 className="card-title text-center">Login</h3>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     Email address
@@ -29,6 +34,7 @@ const LoginPage = () => {
                     className="form-control"
                     id="email"
                     placeholder="Enter your email"
+                    onChange={(e) => setEmail(e.target.email)}
                   />
                 </div>
                 <div className="mb-3">
@@ -40,6 +46,7 @@ const LoginPage = () => {
                     className="form-control"
                     id="password"
                     placeholder="Enter your password"
+                    onChange={(e) => setPassword(e.target.password)}
                   />
                 </div>
                 <button type="submit" className="btn btn-primary w-100">
