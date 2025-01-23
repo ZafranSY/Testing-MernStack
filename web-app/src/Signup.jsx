@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { usenavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const SignupPage = () => {
   const [name, setName] = useState();
@@ -9,7 +9,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState();
   const [confirmPassowrd, setConfirmPassword] = useState();
   const [error, setError] = useState("");
-  const Navigate = usenavigate();
+  const Navigate = useNavigate();
 
   const handleConfirmPasswordChange = (value) => {
     setConfirmPassword(value);
@@ -21,10 +21,14 @@ const SignupPage = () => {
     e.preventDefault();
     axios
       .post("http://localhost:5002/signup", { name, email, password })
-      .then((result) => console.log(result))
+      .then((result) => {
+        if (result.data === "success") {
+          Navigate("/login");
+        }
+      })
       .catch((err) => console.log(err));
 
-    Navigate("login");
+    i;
   };
 
   return (
@@ -80,7 +84,7 @@ const SignupPage = () => {
                     className="form-control"
                     id="confirmPassword"
                     placeholder="Confirm your password"
-                    onchange={(e) =>
+                    onChange={(e) =>
                       handleConfirmPasswordChange(e.target.value)
                     }
                   />
