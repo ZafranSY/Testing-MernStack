@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.connect("mongodb://localhost:27017/myFirstdb");
+
 app.post("/signup", (req, res) => {
   userModel
     .create(req.body)
@@ -29,11 +30,9 @@ app.post("/login", async (req, res) => {
       res.json("no acconnt existed");
     }
   });
-
-  if (isPasswordMatch) res.render("home");
-  else res.render("wrong password");
 });
 const port = 5002;
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
 });
+app.use(cors({ origin: "http://localhost:5173" })); // Adjust port as needed
