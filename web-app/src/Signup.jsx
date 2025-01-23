@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { usenavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [name, setName] = useState();
@@ -8,6 +9,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState();
   const [confirmPassowrd, setConfirmPassword] = useState();
   const [error, setError] = useState("");
+  const Navigate = usenavigate();
 
   const handleConfirmPasswordChange = (value) => {
     setConfirmPassword(value);
@@ -21,7 +23,10 @@ const SignupPage = () => {
       .post("http://localhost:5002/signup", { name, email, password })
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
+
+    Navigate("login");
   };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
