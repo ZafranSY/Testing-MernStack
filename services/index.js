@@ -34,6 +34,6 @@ app.post("/login", async (req, res) => {
 });
 const port = 5002;
 app.listen(port, () => {
-  console.log(`server running on port ${port}`);
+  console.log(`server running on port  ${port}`);
 });
 app.use(cors({ origin: "http://localhost:5173" })); // Adjust port as needed
