@@ -9,12 +9,25 @@ app.use(cors());
 
 mongoose.connect("mongodb://localhost:27017/myFirstdb");
 //api for signup
-app.post("/signup", (req, res) => {
-  userModel
-    .create(req.body)
-    .then((users) => res.json(users))
-    .catch((err) => res.json(err));
+app.post("/signup", async (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+  
+  try {
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email already exists." });
+    }
+    
+    const user = await userModel.create({ name, email, password });
+    res.status(201).json("success");
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
+
 //api for login
 app.post("/login", async (req, res) => {
   //   const chech = userModel.findOne({ email: req.body.email });
