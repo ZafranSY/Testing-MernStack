@@ -19,6 +19,11 @@ const SignupPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(password != confirmPassowrd)
+    {
+      setError("Passwords do not match.");
+    return;
+    }
     axios
       .post("http://localhost:5002/signup", { name, email, password })
       .then((result) => {
